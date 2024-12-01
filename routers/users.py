@@ -6,9 +6,9 @@ from model import User
 user_router = APIRouter()
 
 
-@user_router.get('/products')
-async def get_products():
+@user_router.get('/users')
+async def get_users():
     query = select(User)
-    products = await User.run_query(query)
+    users = await User.run_query(query)
 
-    return products
+    return users

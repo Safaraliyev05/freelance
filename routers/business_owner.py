@@ -7,8 +7,8 @@ b_owner = APIRouter()
 
 
 @b_owner.get('/business_owners')
-async def get_products():
+async def get_owners():
     query = select(BusinessOwner)
-    products = await BusinessOwner.run_query(query)
+    owner = await BusinessOwner.run_query(query)
 
-    return products
+    return owner
