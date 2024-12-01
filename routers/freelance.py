@@ -7,8 +7,8 @@ freelance_router = APIRouter()
 
 
 @freelance_router.get('/freelances')
-async def get_products():
+async def get_freelance():
     query = select(Freelance)
-    products = await Freelance.run_query(query)
+    freelance = await Freelance.run_query(query)
 
-    return products
+    return freelance
