@@ -9,8 +9,8 @@ from model.database import BaseModel
 
 class UserStatus(PyEnum):
     ACTIVE = "active"
-    INACTIVE = "inactive"
-    SUSPENDED = "suspended"
+    BLOCKED = "blocked"
+
 
 
 class User(BaseModel):
@@ -26,7 +26,7 @@ class User(BaseModel):
                                                            lazy='selectin')
 
     def __repr__(self):
-        return f"<User(username={self.username}, email={self.email}, status={self.status.name})>"
+        return f"User username={self.username}, email={self.email}, status={self.status.name}"
 
 
 class Freelance(BaseModel):
@@ -36,7 +36,7 @@ class Freelance(BaseModel):
     education: Mapped[list['Education']] = relationship('Education', back_populates='freelance', lazy='selectin')
 
     def __repr__(self):
-        return f"<Freelance(user_id={self.user_id})>"
+        return f"Freelance{self.user_id}"
 
 
 class BusinessOwner(BaseModel):
@@ -44,7 +44,7 @@ class BusinessOwner(BaseModel):
     user: Mapped['User'] = relationship('User', back_populates='business_owner', lazy='selectin')
 
     def __repr__(self):
-        return f"<BusinessOwner(user_id={self.user_id})>"
+        return f"BusinessOwner{self.user_id}"
 
 
 class Education(BaseModel):
@@ -57,4 +57,4 @@ class Education(BaseModel):
     ended_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     def __repr__(self):
-        return f"<Education(name={self.name}, freelance_id={self.freelance_id})>"
+        return f"Education={self.name}, freelance_id={self.freelance_id}"

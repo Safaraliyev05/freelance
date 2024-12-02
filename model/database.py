@@ -48,7 +48,6 @@ db = AsyncDatabaseSession()
 db.init()
 
 
-# ----------------------------- ABSTRACTS ----------------------------------
 class AbstractClass:
     @staticmethod
     async def commit():

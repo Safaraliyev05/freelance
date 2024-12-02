@@ -6,7 +6,7 @@ from model import Education
 education = APIRouter()
 
 
-@education.get('/education')
+@education.get('/education', summary='List of Educations', tags=['Education'])
 async def get_education():
     query = select(Education)
     education = await Education.run_query(query)
