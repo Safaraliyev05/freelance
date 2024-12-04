@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from model import db
-from routers import b_owner, user_router, freelance_router, education
+from routers import b_owner, user_router, freelance_router, education, project_router
 
 
 @asynccontextmanager
@@ -13,6 +13,7 @@ async def lifespan(app: FastAPI):
     app.include_router(freelance_router)
     app.include_router(b_owner)
     app.include_router(education)
+    app.include_router(project_router)
     yield
 
 

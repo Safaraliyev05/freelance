@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum as PyEnum
 
-from sqlalchemy import String, BigInteger, ForeignKey, DateTime, Enum
+from sqlalchemy import String, BigInteger, ForeignKey, DateTime, Enum, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from model.database import BaseModel
@@ -10,7 +10,6 @@ from model.database import BaseModel
 class UserStatus(PyEnum):
     ACTIVE = "active"
     BLOCKED = "blocked"
-
 
 
 class User(BaseModel):
@@ -32,8 +31,9 @@ class User(BaseModel):
 class Freelance(BaseModel):
     user_id: Mapped[int] = mapped_column(BigInteger, ForeignKey(User.id, ondelete='CASCADE'), unique=True)
     user: Mapped['User'] = relationship('User', back_populates='freelance', lazy='selectin')
-
     education: Mapped[list['Education']] = relationship('Education', back_populates='freelance', lazy='selectin')
+    project: Mapped[list['Project']] = relationship('Project', back_populates='freelance', lazy='selectin')
+    skills: Mapped[list] = mapped_column(String(255), nullable=True)
 
     def __repr__(self):
         return f"Freelance{self.user_id}"
@@ -58,3 +58,11 @@ class Education(BaseModel):
 
     def __repr__(self):
         return f"Education={self.name}, freelance_id={self.freelance_id}"
+
+
+class Project(BaseModel):
+    freelance_id: Mapped[int] = mapped_column(BigInteger, ForeignKey(Freelance.id, ondelete='CASCADE'))
+    freelance: Mapped['Freelance'] = relationship('Freelance', back_populates='project', lazy='selectin')
+
+    name: Mapped[str] = mapped_column(String(255), nullable=True)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
